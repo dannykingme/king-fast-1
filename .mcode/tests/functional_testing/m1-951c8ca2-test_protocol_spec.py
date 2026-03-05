@@ -9,7 +9,7 @@ This script supports two modes:
 1. SRC Validation: Tests endpoints and captures responses (no expected_response)
 2. DST Contract Validation: Tests endpoints and validates responses match expected (has expected_response)
 
-Generated at: 2026-03-05T08:30:38.990344+00:00
+Generated at: 2026-03-05T08:31:55.938520+00:00
 Project: king-fast-1
 Milestone: 1
 """

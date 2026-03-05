@@ -5,8 +5,9 @@ export function createApp(dbPath: string = "./users.db") {
   const db = new Database(dbPath);
   db.pragma("journal_mode = WAL");
 
+  db.exec(`DROP TABLE IF EXISTS users`);
   db.exec(`
-    CREATE TABLE IF NOT EXISTS users (
+    CREATE TABLE users (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
       email TEXT NOT NULL UNIQUE
