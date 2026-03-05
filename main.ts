@@ -22,7 +22,38 @@ export function createApp(dbPath: string = "./users.db") {
   });
 
   app.post("/users", (req: Request, res: Response) => {
-    const { name, email } = req.body;
+    const body = req.body || {};
+    const { name, email } = body;
+
+    const detail: Array<{
+      type: string;
+      loc: string[];
+      msg: string;
+      input: Record<string, unknown>;
+      url: string;
+    }> = [];
+    if (name === undefined) {
+      detail.push({
+        type: "missing",
+        loc: ["body", "name"],
+        msg: "Field required",
+        input: body,
+        url: "https://errors.pydantic.dev/2.5/v/missing",
+      });
+    }
+    if (email === undefined) {
+      detail.push({
+        type: "missing",
+        loc: ["body", "email"],
+        msg: "Field required",
+        input: body,
+        url: "https://errors.pydantic.dev/2.5/v/missing",
+      });
+    }
+    if (detail.length > 0) {
+      res.status(422).json({ detail });
+      return;
+    }
 
     const existing = db
       .prepare("SELECT id FROM users WHERE email = ?")
